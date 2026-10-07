@@ -22,6 +22,9 @@
 
     {{-- ================= INTRO ================= --}}
     <section class="py-16">
+        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
+                 style="background-image: url('{{ asset('images/aboutUs.png') }}');">
+            </div>
         <div class="max-w-3xl mx-auto px-6 text-center">
             <p class="mb-4 leading-relaxed">
                 Established in 2026, Horizon-LAB are leaders in the sales, servicing and repairs of medical equipment.

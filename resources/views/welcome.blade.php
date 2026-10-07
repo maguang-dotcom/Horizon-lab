@@ -6,87 +6,296 @@
     <title>Horizon-LAB — Home</title>
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif;
+        }
     </style>
 </head>
+
 <body class="bg-white">
 
     @include('partials.header')
 
     {{-- ================= HERO ================= --}}
-    <section class="bg-slate-900">
-        <div class="max-w-7xl mx-auto px-6 py-20 grid lg:grid-cols-2 gap-12 items-center">
+    <section class="relative isolate overflow-hidden bg-slate-900">
+
+        {{-- LEFT SIDE BACKGROUND IMAGE (behind the text) --}}
+        <div class="pointer-events-none absolute inset-y-0 left-0 -z-10 w-full lg:w-1/2" aria-hidden="true">
+
+            <div class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
+                 style="background-image: url('{{ asset('images/landing.png') }}');">
+            </div>
+
+            {{-- Fades the image into the dark background so the text stays readable --}}
+            <div class="absolute inset-0 bg-gradient-to-r from-slate-900/40 via-slate-900/80 to-slate-900"></div>
+        </div>
+
+        {{-- RIGHT SIDE BACKGROUND IMAGE (large screens only) --}}
+        <div class="pointer-events-none absolute inset-y-0 right-0 -z-10 hidden w-1/2 lg:block" aria-hidden="true">
+
+            <div class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                 style="background-image: url('{{ asset('images/home-image.png') }}');">
+            </div>
+
+            {{-- Blends the image into the left half and darkens the bottom for the caption --}}
+            <div class="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/20 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-6 py-20 grid lg:grid-cols-2 gap-12 items-center">
 
             {{-- Left column --}}
             <div>
+
+                {{-- Badge --}}
                 <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-teal-400 text-xs font-medium mb-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round" />
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         class="w-3.5 h-3.5"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2.5">
+                        <path d="M20 6 9 17l-5-5"
+                              stroke-linecap="round"
+                              stroke-linejoin="round" />
                     </svg>
+
                     Trusted Biomedical Network in Uganda
                 </span>
 
+
+                {{-- Main Heading --}}
                 <h1 class="text-4xl sm:text-5xl font-bold text-white leading-tight mb-6">
                     Bridging the Gap in Healthcare Logistics.
                 </h1>
 
-                <p class="text-slate-400 text-base leading-relaxed mb-8 max-w-lg">
-                    Report equipment problems, find qualified biomedical professionals and get the technical support your facility needs — all in one platform.
+
+                {{-- Description --}}
+                <p class="text-slate-300 text-base leading-relaxed mb-8 max-w-lg">
+                    Report equipment problems, find qualified biomedical professionals
+                    and get the technical support your facility needs — all in one platform.
                 </p>
 
-                <div class="flex flex-wrap gap-3 mb-12">
-                    <a href="{{ route('register') }}" class="inline-flex items-center gap-2 px-5 py-3 rounded-md bg-teal-500 hover:bg-teal-400 text-slate-900 font-semibold text-sm transition">
-                        Request Equipment Service
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
+
+                {{-- ================= BECOME OUR PARTNER ================= --}}
+                <div class="relative inline-block mb-12">
+
+                    {{-- Main Partner Button --}}
+                    <button
+                        id="partnerButton"
+                        type="button"
+                        onclick="togglePartnerMenu()"
+                        class="inline-flex items-center gap-2 px-5 py-3 rounded-md
+                               bg-teal-500 hover:bg-teal-400
+                               text-slate-900 font-semibold text-sm
+                               transition duration-200">
+
+                        Become Our Partner
+
+                        <svg id="partnerArrow"
+                             xmlns="http://www.w3.org/2000/svg"
+                             class="w-4 h-4 transition-transform duration-200"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2">
+
+                            <path d="M6 9l6 6 6-6"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round" />
                         </svg>
-                    </a>
-                    <a href="{{ route('engineer-register') }}" class="inline-flex items-center gap-2 px-5 py-3 rounded-md bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-semibold text-sm transition">
-                        Join as a Biomedical Professional
-                    </a>
+                    </button>
+
+
+                    {{-- ================= PARTNER OPTIONS ================= --}}
+                    <div
+                        id="partnerOptions"
+                        class="hidden absolute left-0 top-full mt-3 w-80
+                               rounded-xl bg-slate-900
+                               border border-slate-700
+                               shadow-2xl overflow-hidden z-50">
+
+                        {{-- Facility Option --}}
+                        <a href="{{ route('register') }}"
+                           class="flex items-start gap-4 px-5 py-4
+                                  hover:bg-slate-800 transition duration-200">
+
+                            {{-- Icon --}}
+                            <div class="flex-shrink-0 w-10 h-10 rounded-lg
+                                        bg-teal-500/10 flex items-center justify-center
+                                        text-teal-400">
+
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     class="w-5 h-5"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     stroke-width="2">
+
+                                    <path d="M3 21h18"/>
+                                    <path d="M5 21V7l7-4 7 4v14"/>
+                                    <path d="M9 21v-5h6v5"/>
+                                    <path d="M9 10h.01"/>
+                                    <path d="M12 10h.01"/>
+                                    <path d="M15 10h.01"/>
+                                </svg>
+
+                            </div>
+
+                            {{-- Text --}}
+                            <div>
+                                <div class="text-white font-semibold text-sm">
+                                    Join as a Healthcare Facility
+                                </div>
+
+                                <p class="text-slate-400 text-xs leading-relaxed mt-1">
+                                    For hospitals and healthcare facilities
+                                    that need equipment support.
+                                </p>
+                            </div>
+
+                        </a>
+
+
+                        {{-- Divider --}}
+                        <div class="border-t border-slate-700"></div>
+
+
+                        {{-- Biomedical Professional Option --}}
+                        <a href="{{ route('engineer-register') }}"
+                           class="flex items-start gap-4 px-5 py-4
+                                  hover:bg-slate-800 transition duration-200">
+
+                            {{-- Icon --}}
+                            <div class="flex-shrink-0 w-10 h-10 rounded-lg
+                                        bg-teal-500/10 flex items-center justify-center
+                                        text-teal-400">
+
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     class="w-5 h-5"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     stroke-width="2">
+
+                                    <circle cx="9" cy="7" r="4"/>
+
+                                    <path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/>
+
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+
+                                    <path d="M21 21v-2a4 4 0 0 0-3-3.87"/>
+                                </svg>
+
+                            </div>
+
+                            {{-- Text --}}
+                            <div>
+                                <div class="text-white font-semibold text-sm">
+                                    Join as a Biomedical Professional
+                                </div>
+
+                                <p class="text-slate-400 text-xs leading-relaxed mt-1">
+                                    For biomedical engineers and technicians
+                                    looking to join our network.
+                                </p>
+                            </div>
+
+                        </a>
+
+                    </div>
+
                 </div>
 
-                <div class="flex flex-wrap gap-5 text-sm text-slate-300">
-                    <a href="{{ route('facility.login') }}" class="hover:text-teal-300">Healthcare facility sign in</a>
-                    <a href="{{ route('engineer.login') }}" class="hover:text-teal-300">Engineer sign in</a>
+
+                {{-- ================= STATISTICS ================= --}}
+                <div class="border-t border-slate-800 pt-8 mt-8 flex flex-wrap gap-12">
+
+                    {{-- Facilities --}}
+                    <div>
+                        <div class="text-2xl font-bold text-white">
+                            {{ number_format($metrics['facilities'] ?? 0) }}
+                        </div>
+
+                        <div class="text-teal-400 text-xs mt-1">
+                            Registered Facilities
+                        </div>
+                    </div>
+
+
+                    {{-- Engineers --}}
+                    <div>
+                        <div class="text-2xl font-bold text-white">
+                            {{ number_format($metrics['engineers'] ?? 0) }}
+                        </div>
+
+                        <div class="text-teal-400 text-xs mt-1">
+                            Available Engineers
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="border-t border-slate-800 pt-8 flex flex-wrap gap-12">
-                    <div>
-                        <div class="text-2xl font-bold text-white">{{ number_format($metrics['facilities'] ?? 0) }}</div>
-                        <div class="text-teal-400 text-xs mt-1">Registered Facilities</div>
-                    </div>
-                    <div>
-                        <div class="text-2xl font-bold text-white">{{ number_format($metrics['engineers'] ?? 0) }}</div>
-                        <div class="text-teal-400 text-xs mt-1">Available Engineers</div>
-                    </div>
-                    <div>
-                        <div class="text-2xl font-bold text-white">{{ number_format($metrics['resolved_requests'] ?? 0) }}</div>
-                        <div class="text-teal-400 text-xs mt-1">Requests Resolved</div>
-                    </div>
-                </div>
             </div>
 
-            {{-- Right column: biomedical engineering image --}}
-            <figure class="relative overflow-hidden rounded-2xl shadow-2xl ring-1 ring-white/10">
-                <img src="{{ asset('images/home-image.png') }}" alt="Biomedical engineer inspecting hospital equipment" class="h-full min-h-[420px] w-full object-cover object-center">
-                <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/85 to-transparent px-6 pb-6 pt-20 text-sm font-medium text-white">
+
+            {{-- ================= RIGHT COLUMN (sits over the background image) ================= --}}
+            <div class="hidden lg:flex min-h-[420px] items-end">
+                <p class="text-sm font-medium text-white">
                     Reliable equipment. Better care.
-                </figcaption>
-            </figure>
+                </p>
+            </div>
 
         </div>
     </section>
 
+
     {{-- ================= TRUST STRIP ================= --}}
     <section class="bg-gray-50 py-8">
+
         <p class="text-center text-xs font-semibold text-slate-400 tracking-wide">
             Trusted by leading health institutions across East Africa
         </p>
+
     </section>
 
+
     @include('partials.footer')
+
+
+    {{-- ================= DROPDOWN JAVASCRIPT ================= --}}
+    <script>
+
+        function togglePartnerMenu() {
+
+            const menu = document.getElementById('partnerOptions');
+            const arrow = document.getElementById('partnerArrow');
+
+            menu.classList.toggle('hidden');
+
+            arrow.classList.toggle('rotate-180');
+        }
+
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+
+            const button = document.getElementById('partnerButton');
+            const menu = document.getElementById('partnerOptions');
+
+            if (!button.contains(event.target) && !menu.contains(event.target)) {
+
+                menu.classList.add('hidden');
+
+                document.getElementById('partnerArrow')
+                    .classList.remove('rotate-180');
+            }
+
+        });
+
+    </script>
 
 </body>
 </html>
