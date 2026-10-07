@@ -1,0 +1,88 @@
+name: Deploy Diocese of Jalle Website
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+
+      - name: Install sshpass
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y sshpass
+
+      - name: Setup SSH Known Hosts
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p ${SSH_PORT:-21098} -H $SSH_HOST >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: Deploy to Server via SSH
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH_LARAVEL }}
+        run: |
+          sshpass -p "$SSH_PASSWORD" ssh -p ${SSH_PORT:-21098} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $SSH_USER@$SSH_HOST "
+            set -e
+            cd $DEPLOY_PATH || exit 1
+
+            echo '=== [1/6] Updating Git Remote and Fetching Latest Code ==='
+            git remote set-url origin https://${{ github.actor }}:$PAT_TOKEN@github.com/${{ github.repository }}.git
+            git fetch --all
+            git reset --hard origin/main
+
+            # Verify or generate APP_KEY if empty
+            if ! grep -q '^APP_KEY=base64:' .env 2>/dev/null; then
+              echo 'Warning: APP_KEY is missing or empty in .env. Generating application encryption key...'
+              php artisan key:generate --force || true
+            fi
+
+            echo '=== [2/6] Installing Composer Dependencies ==='
+            if [ -f composer.phar ]; then
+              php composer.phar install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+            elif command -v composer &> /dev/null; then
+              composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+            else
+              echo 'Warning: Composer not found in PATH or root. Skipping.'
+            fi
+
+            echo '=== [3/6] Running Database Migrations & Seeds ==='
+            php artisan migrate --force || true
+            php artisan db:seed --force || true
+
+            echo '=== [4/6] Linking Storage Directory ==='
+            php artisan storage:link || true
+
+            echo '=== [5/6] Optimizing and Caching Configurations ==='
+            php artisan optimize:clear || true
+            php artisan config:cache || true
+            php artisan route:cache || true
+            php artisan view:cache || true
+            php artisan event:cache || true
+
+            echo '=== [6/6] Enforcing Production File Permissions ==='
+            chmod -R 775 storage bootstrap/cache public || true
+
+            # If any recent error log exists, output the last 15 lines for diagnostics
+            if [ -f storage/logs/laravel.log ]; then
+              echo '=== Recent Laravel Log Snippet (if any) ==='
+              tail -n 15 storage/logs/laravel.log || true
+            fi
+
+            echo '=== Deployment Completed Successfully! ==='
+          "
