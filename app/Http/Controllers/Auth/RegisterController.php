@@ -41,7 +41,7 @@ class RegisterController extends Controller
 
         Auth::login($user);
 
-        return redirect()->intended(route('dashboard'));
+        return redirect()->route('facility.dashboard');
     }
 
     public function registerEngineer(Request $request): RedirectResponse

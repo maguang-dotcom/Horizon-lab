@@ -155,6 +155,23 @@ class RoleBasedAuthenticationTest extends TestCase
         $this->assertAuthenticatedAs($facility);
     }
 
+    public function test_facility_registration_redirects_to_facility_dashboard(): void
+    {
+        $response = $this->post(route('register.submit'), [
+            'name' => 'Facility Manager',
+            'email' => 'new-facility@example.com',
+            'address' => 'Kampala',
+            'password' => 'secret123',
+            'password_confirmation' => 'secret123',
+        ]);
+
+        $response->assertRedirectToRoute('facility.dashboard');
+        $this->assertDatabaseHas('users', [
+            'email' => 'new-facility@example.com',
+            'role' => 'facility',
+        ]);
+    }
+
     public function test_engineer_login_redirects_to_engineer_dashboard(): void
     {
         $engineer = User::factory()->create([
