@@ -10,8 +10,9 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Engineer\EngineerDashboardController;
 use App\Http\Controllers\Engineer\EngineerServiceReportController;
 use App\Http\Controllers\Facility\FacilityDashboardController;
-use App\Http\Controllers\Facility\FacilitySettingsController;
+use App\Http\Controllers\Facility\FacilityReportController;
 use App\Http\Controllers\Facility\FacilityServiceRequestController;
+use App\Http\Controllers\Facility\FacilitySettingsController;
 use App\Http\Controllers\ServiceRequestController;
 use App\Models\EngineerProfile;
 use App\Models\Facility;
@@ -133,11 +134,13 @@ Route::middleware(['auth', 'role:facility'])
 
         // Referenced by the sidebar / quick links but not built yet —
         // wire these to real controllers as those screens are built.
-        Route::view('service-requests', 'HealthyFacility.comingsoon')->name('service-requests.index');
+        Route::get('service-requests', [FacilityServiceRequestController::class, 'index'])
+            ->name('service-requests.index');
         Route::view('equipment', 'HealthyFacility.comingsoon')->name('equipment.index');
         Route::view('providers', 'HealthyFacility.comingsoon')->name('providers.index');
         Route::view('service-records', 'HealthyFacility.comingsoon')->name('service-records.index');
-        Route::view('reports', 'HealthyFacility.comingsoon')->name('reports.index');
+        Route::get('reports', [FacilityReportController::class, 'index'])
+            ->name('reports.index');
         Route::get('settings', [FacilitySettingsController::class, 'edit'])->name('settings.edit');
         Route::put('settings/profile', [FacilitySettingsController::class, 'updateProfile'])
             ->name('settings.profile.update');

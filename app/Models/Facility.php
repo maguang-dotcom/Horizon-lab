@@ -10,7 +10,7 @@ class Facility extends Model
 {
     protected $fillable = [
         'user_id', 'name', 'facility_type', 'address', 'district',
-        'latitude', 'longitude', 'contact_phone', 'status', 'working_license_path',
+        'latitude', 'longitude', 'contact_phone', 'status', 'working_license_path', 'logo_path',
     ];
 
     protected $casts = [

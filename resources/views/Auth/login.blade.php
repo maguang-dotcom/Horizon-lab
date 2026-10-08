@@ -19,9 +19,6 @@
             <a href="{{ route('engineer.login') }}" class="block text-center bg-gray-800 text-white py-3 rounded-md hover:bg-gray-900 transition">
                 Engineer
             </a>
-            <a href="{{ route('admin.login') }}" class="block text-center bg-emerald-600 text-white py-3 rounded-md hover:bg-emerald-700 transition">
-                Admin
-            </a>
         </div>
 
         <p class="text-sm text-gray-600 text-center mt-6">

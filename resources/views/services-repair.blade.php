@@ -32,7 +32,10 @@
 
     {{-- ================= INTRO ================= --}}
     <section class="py-16">
-        <div class="max-w-3xl mx-auto px-6 text-center">
+        <div class="max-w-3xl mx-auto px-6 text-center text-dark">
+            <div class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
+                 style="background-image: url('{{ asset('images/repair.png') }}');">
+            </div>
             <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-800 mb-6">There when you need us, day or night.</h2>
             <p class="mb-4 leading-relaxed">
                 At Horizon-LAB, we understand just how important it is to ensure that everything is in working order in hospitals or other healthcare settings. Just like any other appliance, medical equipment is not immune to faults.
@@ -69,9 +72,60 @@
                 </div>
 
                 <div class="bg-white border border-slate-200 rounded-lg p-8 shadow-sm">
-                    <h3 class="font-semibold text-slate-800 mb-3">Ad hoc maintenance</h3>
+                    <h3 class="font-semibold text-slate-800 mb-3">Installation & Commissioning</h3>
                     <p class="text-sm leading-relaxed text-slate-500">
-                        Our highly trained medical equipment engineers are here when you need us and we carry spare parts to try and ensure the fault is resolved during the initial call out.
+                        Installation of new medical equipment<br>
+                        Equipment setup and configuration<br>
+                        Testing before clinical use<br>
+                        Commissioning and acceptance testing<br>
+                        Connecting equipment to hospital systems
+                    </p>
+                </div>
+                
+                <div class="bg-white border border-slate-200 rounded-lg p-8 shadow-sm">
+                    <h3 class="font-semibold text-slate-800 mb-3">Installation & Commissioning</h3>
+                    <p class="text-sm leading-relaxed text-slate-500">
+                        Installation of new medical equipment<br>
+                        Equipment setup and configuration<br>
+                        Testing before clinical use<br>
+                        Commissioning and acceptance testing<br>
+                        Connecting equipment to hospital systems
+                    </p>
+                </div>
+                
+                <div class="bg-white border border-slate-200 rounded-lg p-8 shadow-sm">
+                    <h3 class="font-semibold text-slate-800 mb-3">Laboratory Equipment Services</h3>
+                    <p class="text-sm leading-relaxed text-slate-500">
+                        Laboratory analyzer maintenance<br>
+                        Centrifuge servicing<br>
+                        Microscope maintenance<br>
+                        Incubator and refrigerator checks<br>
+                        Autoclave testing<br>
+                        Calibration of laboratory instruments
+                    </p>
+                </div>
+                
+                <div class="bg-white border border-slate-200 rounded-lg p-8 shadow-sm">
+                    <h3 class="font-semibold text-slate-800 mb-3">Medical Technology & Software</h3>
+                    <p class="text-sm leading-relaxed text-slate-500">
+                        Biomedical engineers can also work on:
+
+                        Medical-device software<br>
+                        Hospital equipment monitoring systems<br>
+                        Equipment-management databases<br>
+                        IoT-based equipment monitoring<br>
+                        Digital health systems<br>
+                        AI-assisted medical technologies
+                    </p>
+                </div>
+                <div class="bg-white border border-slate-200 rounded-lg p-8 shadow-sm">
+                    <h3 class="font-semibold text-slate-800 mb-3">Training & Technical Support</h3>
+                    <p class="text-sm leading-relaxed text-slate-500">
+                       Training hospital staff to use equipment safely<br>
+                       User training after installation<br>
+                       Technical troubleshooting support<br>
+                       Creating equipment user guides<br>
+                       Emergency technical support
                     </p>
                 </div>
             </div>
@@ -81,7 +135,7 @@
     {{-- ================= WHAT'S INCLUDED ================= --}}
     <section class="py-16">
         <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-800 text-center mb-12">What's included</h2>
+            <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-800 text-center mb-12">OUR PRODUCTS</h2>
 
             <div class="grid md:grid-cols-2 gap-8">
                 <div class="border border-slate-200 rounded-lg p-8 shadow-sm">

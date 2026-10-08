@@ -11,6 +11,24 @@ use Illuminate\View\View;
 class FacilityServiceRequestController extends Controller
 {
     /**
+     * List the facility's service requests and the service types it can request.
+     */
+    public function index(Request $request): View
+    {
+        $facility = $request->user()->currentFacility;
+
+        return view('HealthyFacility.service-requests', [
+            'requests' => $facility
+                ? BiomedicalServiceRequest::query()
+                    ->where('facility_id', $facility->id)
+                    ->latest()
+                    ->paginate(10)
+                : null,
+            'serviceTypes' => BiomedicalServiceRequest::SERVICE_TYPES,
+        ]);
+    }
+
+    /**
      * Show the request form for the logged-in facility.
      */
     public function create(): View

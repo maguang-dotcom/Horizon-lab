@@ -14,9 +14,9 @@
     .stat { border-radius:12px; padding:18px; border:1px solid var(--bd); background:var(--bg); }
     .stat-icon { width:44px; height:44px; border-radius:999px; background:var(--fg); color:#fff; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
     .t-blue   { --bg:#EDF3FF; --bd:#D5E3FF; --fg:#1F5EE8; }
-    .t-violet { --bg:#F3EEFF; --bd:#E3D8FB; --fg:#7C4DDB; }
-    .t-orange { --bg:#FFF5EA; --bd:#FBE2C4; --fg:#F28C1B; }
-    .t-green  { --bg:#EAF8F0; --bd:#CDEBD9; --fg:#1DA660; }
+    .t-violet { --bg:#F3EEFF; --bd:#E3D8FB; --fg:#490dc3; }
+    .t-orange { --bg:#FFF5EA; --bd:#FBE2C4; --fg:#3404e1; }
+    .t-green  { --bg:#EAF8F0; --bd:#CDEBD9; --fg:#2e0564; }
 
     .data-table { width:100%; font-size:13px; border-collapse:collapse; }
     .data-table thead th { background:#F4F7FC; color:#334155; font-weight:600; font-size:12px; text-align:left; padding:10px 12px; }
@@ -208,26 +208,7 @@
             </div>
         </div>
 
-        {{-- Support banner --}}
-        <div class="card flex flex-col md:flex-row md:items-center gap-4" style="background:#EEF4FF; border-color:#D9E6FB;">
-            <div class="w-11 h-11 rounded-full flex items-center justify-center text-white shrink-0" style="background:var(--blue);">
-                <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>
-            </div>
-            <div class="flex-1">
-                <p class="font-semibold">Need biomedical support?</p>
-                <p class="text-xs text-slate-600 mt-0.5">Contact the Biomedical Engineering Department for urgent assistance.</p>
-            </div>
-            <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
-                <span class="flex items-center gap-2 text-blue-700">
-                    <svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.3.2 2.5.57 3.6a1 1 0 0 1-.25 1l-2.2 2.2Z"/></svg>
-                    {{ $supportPhone ?? '+256 700 123 456' }}
-                </span>
-                <span class="flex items-center gap-2 text-blue-700">
-                    <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-                    {{ $supportEmail ?? 'biomed@healthfacility.go.ug' }}
-                </span>
-            </div>
-        </div>
+        
     </div>
 
     {{-- ================= RIGHT RAIL ================= --}}
@@ -293,68 +274,15 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
-<script>
-    Chart.defaults.font.family = "'Inter', ui-sans-serif, system-ui, sans-serif";
-    Chart.defaults.font.size = 12;
-    Chart.defaults.color = '#64748B';
-    Chart.defaults.borderColor = '#EEF1F6';
-
-    const bar = (label, key, color) => ({ label, data: @json($chartData)[key], backgroundColor: color, maxBarThickness: 34 });
-
-    new Chart(document.getElementById('requestsOverviewChart'), {
-        type: 'bar',
-        data: {
-            labels: @json($chartData['months']),
-            datasets: [
-                bar('Maintenance', 'maintenance', '#1F5EE8'),
-                bar('Calibration', 'calibration', '#1DA660'),
-                bar('Repair',      'repair',      '#F28C1B'),
-                bar('Other',       'other',       '#8B5CF6'),
-            ],
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                x: { stacked: true, grid: { display: false } },
-                y: { stacked: true, beginAtZero: true, ticks: { precision: 0 } },
-            },
-            plugins: { legend: { position: 'top', align: 'start', labels: { boxWidth: 8, boxHeight: 8, usePointStyle: true } } },
-        },
-    });
-
-    const totalRequests = {{ (int) ($stats['total'] ?? 0) }};
-    const centerText = {
-        id: 'centerText',
-        afterDraw(chart) {
-            const { ctx, chartArea: { left, right, top, bottom } } = chart;
-            const x = (left + right) / 2, y = (top + bottom) / 2;
-            ctx.save();
-            ctx.textAlign = 'center';
-            ctx.fillStyle = '#0F1B3D';
-            ctx.font = '700 26px ' + Chart.defaults.font.family;
-            ctx.fillText(totalRequests, x, y + 2);
-            ctx.fillStyle = '#64748B';
-            ctx.font = '12px ' + Chart.defaults.font.family;
-            ctx.fillText('Total Requests', x, y + 20);
-            ctx.restore();
-        },
-    };
-
-    new Chart(document.getElementById('serviceTypeChart'), {
-        type: 'doughnut',
-        data: {
-            labels: @json(array_column($serviceTypeBreakdown, 'label')),
-            datasets: [{
-                data: @json(array_column($serviceTypeBreakdown, 'count')),
-                backgroundColor: @json(array_column($serviceTypeBreakdown, 'color')),
-                borderColor: '#fff',
-                borderWidth: 2,
-            }],
-        },
-        options: { responsive: true, maintainAspectRatio: true, cutout: '62%', plugins: { legend: { display: false } } },
-        plugins: [centerText],
-    });
+@php
+    $facilityDashboardChartData = [
+        'chartData' => $chartData,
+        'totalRequests' => (int) ($stats['total'] ?? 0),
+        'serviceTypeBreakdown' => $serviceTypeBreakdown,
+    ];
+@endphp
+<script type="application/json" id="facility-dashboard-chart-data">
+    @json($facilityDashboardChartData)
 </script>
+@vite('resources/js/facility-dashboard.js')
 @endpush

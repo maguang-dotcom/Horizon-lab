@@ -36,8 +36,7 @@
 @php
     $navItems = [
         ['Dashboard',        'facility.dashboard',              'facility.dashboard',              '<path d="M3 11.5 12 4l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-8.5Z"/>'],
-        ['Service Requests', 'facility.service-requests.index', 'facility.service-requests.*',     '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 11h6M9 15h6"/>'],
-        ['Equipment',        'facility.equipment.index',        'facility.equipment.*',            '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>'],
+        ['Service Requests', 'facility.service-requests.index', 'facility.service-requests',     '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 11h6M9 15h6"/>'],
         ['Reports',          'facility.reports.index',          'facility.reports.*',              '<path d="M6 20V11M12 20V4M18 20v-6"/>'],
         ['Settings',         'facility.settings.edit',          'facility.settings.*',             '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/>'],
     ];
@@ -109,13 +108,35 @@
                 </div>
             </div>
 
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full flex items-center justify-center text-white" style="background:var(--blue);">
-                    <svg viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0Z"/></svg>
+            <details class="relative group">
+                <summary class="flex cursor-pointer list-none items-center gap-3 rounded-lg px-2 py-1 hover:bg-slate-50 [&::-webkit-details-marker]:hidden">
+                    <div class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full text-white" style="background:var(--blue);">
+                        @if (! empty(auth()->user()?->currentFacility?->logo_path))
+                            <img src="{{ asset('storage/'.auth()->user()->currentFacility->logo_path) }}" alt="Profile picture" class="h-full w-full object-cover">
+                        @else
+                            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0Z"/></svg>
+                        @endif
+                    </div>
+                    <span class="hidden max-w-40 truncate text-sm font-medium sm:block">{{ auth()->user()->name ?? 'Facility Manager' }}</span>
+                    <svg viewBox="0 0 24 24" class="h-4 w-4 text-slate-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                </summary>
+                <div class="absolute right-0 z-50 mt-3 w-56 overflow-hidden rounded-xl border border-slate-200 bg-white py-2 shadow-xl">
+                    <div class="border-b border-slate-100 px-4 py-2">
+                        <p class="truncate text-sm font-semibold">{{ auth()->user()->name ?? 'Facility Manager' }}</p>
+                        <p class="truncate text-xs text-slate-500">{{ auth()->user()->email ?? '' }}</p>
+                    </div>
+                    <a href="{{ route('facility.settings.edit') }}"
+                       class="block px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50">
+                        Profile settings
+                    </a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="w-full px-4 py-2.5 text-left text-sm text-red-600 hover:bg-red-50">
+                            Log out
+                        </button>
+                    </form>
                 </div>
-                <span class="hidden sm:block text-sm font-medium">{{ auth()->user()->name ?? 'Facility Manager' }}</span>
-                <svg viewBox="0 0 24 24" class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
-            </div>
+            </details>
         </div>
     </header>
 

@@ -10,7 +10,9 @@ use App\Models\ServiceReport;
 use App\Models\ServiceRequest;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class RoleBasedAuthenticationTest extends TestCase
@@ -41,6 +43,31 @@ class RoleBasedAuthenticationTest extends TestCase
             ->assertSee('alt="Horizon Lab logo"', false);
     }
 
+    public function test_facility_service_requests_page_lists_service_options(): void
+    {
+        /** @var User $facility */
+        $facility = User::factory()->create(['role' => 'facility']);
+
+        $this->actingAs($facility)
+            ->get(route('facility.service-requests.index'))
+            ->assertOk()
+            ->assertViewIs('HealthyFacility.service-requests')
+            ->assertSee('Request a service')
+            ->assertSee('service_type=calibration', false);
+    }
+
+    public function test_facility_reports_page_renders_request_graphs(): void
+    {
+        /** @var User $facility */
+        $facility = User::factory()->create(['role' => 'facility']);
+
+        $this->actingAs($facility)
+            ->get(route('facility.reports.index'))
+            ->assertOk()
+            ->assertViewIs('HealthyFacility.reports')
+            ->assertSee('Reports');
+    }
+
     public function test_facility_equipment_placeholder_renders(): void
     {
         /** @var User $facility */
@@ -61,6 +88,54 @@ class RoleBasedAuthenticationTest extends TestCase
         $this->get(route('engineer.login'))
             ->assertOk()
             ->assertViewIs('Auth.engineer-login');
+    }
+
+    public function test_facility_settings_page_renders(): void
+    {
+        $facilityUser = User::factory()->create([
+            'name' => 'Facility Profile User',
+            'email' => 'facility-profile@example.com',
+            'role' => 'facility',
+        ]);
+        Facility::create([
+            'user_id' => $facilityUser->id,
+            'name' => 'North Clinic',
+        ]);
+
+        $this->actingAs($facilityUser)
+            ->get(route('facility.settings.edit'))
+            ->assertOk()
+            ->assertViewIs('HealthyFacility.settings')
+            ->assertSee('Facility Profile User')
+            ->assertSee('facility-profile@example.com')
+            ->assertSee('href="'.route('facility.settings.edit').'"', false)
+            ->assertSee('Profile settings')
+            ->assertSee('href="#facility-profile-form"', false)
+            ->assertSee('id="facility-profile-form"', false)
+            ->assertSee('Update Profile');
+    }
+
+    public function test_facility_uploaded_logo_shows_in_account_menu(): void
+    {
+        Storage::fake('public');
+        $facilityUser = User::factory()->create(['role' => 'facility']);
+        $facility = Facility::create(['user_id' => $facilityUser->id, 'name' => 'North Clinic']);
+
+        $this->actingAs($facilityUser)
+            ->put(route('facility.settings.profile.update'), [
+                'name' => $facilityUser->name,
+                'facility_name' => 'North Clinic',
+                'logo' => UploadedFile::fake()->createWithContent('logo.png', base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==')),
+            ])
+            ->assertSessionHasNoErrors();
+
+        $facility->refresh();
+        Storage::disk('public')->assertExists($facility->logo_path);
+
+        $this->actingAs($facilityUser)
+            ->get(route('facility.settings.edit'))
+            ->assertSee('storage/'.$facility->logo_path, false)
+            ->assertSee('alt="Profile picture"', false);
     }
 
     public function test_facility_login_redirects_to_facility_dashboard(): void
@@ -95,6 +170,28 @@ class RoleBasedAuthenticationTest extends TestCase
 
         $response->assertRedirectToRoute('engineer.dashboard');
         $this->assertAuthenticatedAs($engineer);
+    }
+
+    public function test_facility_logout_redirects_to_home(): void
+    {
+        $facility = User::factory()->create(['role' => 'facility']);
+
+        $this->actingAs($facility)
+            ->post(route('logout'))
+            ->assertRedirectToRoute('home');
+
+        $this->assertGuest();
+    }
+
+    public function test_engineer_logout_redirects_to_home(): void
+    {
+        $engineer = User::factory()->create(['role' => 'engineer']);
+
+        $this->actingAs($engineer)
+            ->post(route('logout'))
+            ->assertRedirectToRoute('home');
+
+        $this->assertGuest();
     }
 
     public function test_assigned_engineer_can_open_service_report_form(): void
@@ -235,6 +332,8 @@ class RoleBasedAuthenticationTest extends TestCase
             ->get(route('facility.dashboard'))
             ->assertOk()
             ->assertSee('data-dashboard-search', false)
+            ->assertSee('id="facility-dashboard-chart-data"', false)
+            ->assertSee('facility-dashboard-', false)
             ->assertSee('data-dashboard-notifications', false)
             ->assertSee('data-notification-id="facility-request-'.$assignedRequest->id.'"', false)
             ->assertSee('data-dashboard-searchable', false);
