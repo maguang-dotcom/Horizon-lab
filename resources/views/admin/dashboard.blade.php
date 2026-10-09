@@ -269,6 +269,11 @@
                                                             @csrf
                                                             <button type="submit" class="rounded-lg bg-emerald-500 px-3 py-2 text-xs font-semibold text-white hover:bg-emerald-600">Approve</button>
                                                         </form>
+                                                                                                                    <form method="POST" action="{{ route('admin.engineers.reject', $profile->user_id) }}" onsubmit="return confirm('Reject this engineer? Their account will be deleted.')">
+                                                                                                                        @csrf
+                                                                                                                        @method('DELETE')
+                                                                                                                        <button type="submit" class="rounded-lg bg-red-500 px-3 py-2 text-xs font-semibold text-white hover:bg-red-600">Reject</button>
+                                                                                                                    </form>
                                                     </div>
                                                 </td>
                                             </tr>

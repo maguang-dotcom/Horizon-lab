@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\AccountCreatedMail;
 use App\Models\Facility;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
 {
@@ -39,9 +41,20 @@ class RegisterController extends Controller
             'address' => $validated['address'],
         ]);
 
+        $this->sendWelcomeEmail($user);
+
         Auth::login($user);
 
         return redirect()->route('facility.dashboard');
+    }
+
+    private function sendWelcomeEmail(User $user): void
+    {
+        try {
+            Mail::to($user->email)->send(new AccountCreatedMail($user));
+        } catch (\Throwable $e) {
+            report($e);
+        }
     }
 
     public function registerEngineer(Request $request): RedirectResponse
@@ -69,6 +82,8 @@ class RegisterController extends Controller
             'is_approved' => false,
             'approved_at' => null,
         ]);
+
+        $this->sendWelcomeEmail($user);
 
         Auth::login($user);
         $request->session()->regenerate();

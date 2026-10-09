@@ -62,8 +62,8 @@
         'assigned'    => ['Assigned',    'c-assigned', 'Write report', 'btn-outline'],
         'completed'   => ['Completed',   'c-done',     'View report',  'btn-outline'],
     ];
-    $assignmentsUrl = '#assignments';
-    $facilitiesUrl  = '#assigned-facilities';
+    $assignmentsUrl = route('engineer.assignments');
+    $facilitiesUrl  = route('engineer.facilities');
 @endphp
 
 {{-- Heading --}}
@@ -102,7 +102,7 @@
         </div>
     </a>
 
-    <a href="#reports" class="kpi k-green">
+    <a href="{{ route('engineer.reports.index') }}" class="kpi k-green">
         <div class="flex items-start gap-5">
             <div class="kpi-icon">
                 <svg viewBox="0 0 24 24" class="w-8 h-8" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-1.6 14.4-4-4 1.4-1.4 2.6 2.6 5.8-5.8 1.4 1.4-7.2 7.2Z"/></svg>

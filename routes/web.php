@@ -9,6 +9,8 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Engineer\EngineerDashboardController;
 use App\Http\Controllers\Engineer\EngineerServiceReportController;
+use App\Http\Controllers\Engineer\EngineerSettingsController;
+use App\Http\Controllers\Engineer\EngineerWorkspaceController;
 use App\Http\Controllers\Facility\FacilityDashboardController;
 use App\Http\Controllers\Facility\FacilityReportController;
 use App\Http\Controllers\Facility\FacilityServiceRequestController;
@@ -57,6 +59,9 @@ Route::middleware(['auth', 'role:admin'])
         Route::get('/users/{user}', [AdminManagementController::class, 'showUser'])->name('users.show');
         Route::get('/settings', [AdminManagementController::class, 'settings'])->name('settings.index');
         Route::put('/settings', [AdminManagementController::class, 'updateSettings'])->name('settings.update');
+        Route::post('/admins', [AdminManagementController::class, 'storeAdmin'])->name('admins.store');
+        Route::delete('/users/{user}', [AdminManagementController::class, 'destroyUser'])->name('users.destroy');
+        Route::delete('/engineers/{user}/reject', [AdminManagementController::class, 'rejectEngineer'])->name('engineers.reject');
         Route::post('/engineers/{user}/approve', [AdminDashboardController::class, 'approveEngineer'])->name('engineers.approve');
         Route::post('/service-requests/{serviceRequest}/assign', [AdminDashboardController::class, 'assignEngineer'])->name('service-requests.assign');
         Route::post('/biomedical-service-requests/{biomedicalServiceRequest}/assign', [AdminDashboardController::class, 'assignBiomedicalEngineer'])
@@ -154,9 +159,16 @@ Route::middleware(['auth', 'role:engineer'])
     ->name('engineer.')
     ->group(function () {
         Route::get('/', [EngineerDashboardController::class, 'index'])->name('dashboard');
+        Route::get('assignments', [EngineerWorkspaceController::class, 'assignments'])->name('assignments');
+        Route::get('facilities', [EngineerWorkspaceController::class, 'facilities'])->name('facilities');
+        Route::get('reports', [EngineerWorkspaceController::class, 'reports'])->name('reports.index');
 
         Route::get('requests/{serviceRequest}/report', [EngineerServiceReportController::class, 'create'])
             ->name('reports.create');
         Route::post('requests/{serviceRequest}/report', [EngineerServiceReportController::class, 'store'])
             ->name('reports.store');
     });
+
+Route::get('/engineer/settings', [EngineerSettingsController::class, 'edit'])->name('engineer.settings');
+Route::put('/engineer/settings/profile', [EngineerSettingsController::class, 'updateProfile'])->name('engineer.settings.profile.update');
+Route::put('/engineer/settings/password', [EngineerSettingsController::class, 'updatePassword'])->name('engineer.settings.password.update');

@@ -24,6 +24,20 @@
         <p class="text-sm text-slate-500">{{ number_format($records->total() + ($biomedicalRecords?->total() ?? 0)) }} records</p>
     </div>
 
+    @if ($section === 'users')
+        <section class="mb-6 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+            <h2 class="text-lg font-bold text-slate-900">Add administrator</h2>
+            <form method="POST" action="{{ route('admin.admins.store') }}" class="mt-4 grid gap-3 md:grid-cols-4">
+                @csrf
+                <input name="name" value="{{ old('name') }}" required placeholder="Full name" class="rounded-lg border border-slate-300 px-3 py-2 text-sm">
+                <input name="email" type="email" value="{{ old('email') }}" required placeholder="Email" class="rounded-lg border border-slate-300 px-3 py-2 text-sm">
+                <input name="password" type="password" required minlength="8" placeholder="Password (min 8)" class="rounded-lg border border-slate-300 px-3 py-2 text-sm">
+                <input name="password_confirmation" type="password" required placeholder="Confirm password" class="rounded-lg border border-slate-300 px-3 py-2 text-sm">
+                <button type="submit" class="rounded-lg bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800 md:col-span-4 md:w-fit">Add administrator</button>
+            </form>
+        </section>
+    @endif
+
     <section class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-slate-200 text-left text-sm">
@@ -36,7 +50,7 @@
                                 <td class="px-4 py-4 text-slate-700">{{ $engineer->specialization ?? $engineer->professional_title ?? 'Not provided' }}</td>
                                 <td class="px-4 py-4 text-slate-700">{{ $engineer->license_number ?? 'Not provided' }}</td>
                                 <td class="px-4 py-4"><span @class(['rounded-full px-2.5 py-1 text-xs font-semibold', 'bg-emerald-100 text-emerald-800' => $engineer->admin_approved, 'bg-amber-100 text-amber-800' => ! $engineer->admin_approved])>{{ $engineer->admin_approved ? 'Approved' : 'Pending approval' }}</span></td>
-                                <td class="px-4 py-4 text-right">@unless ($engineer->admin_approved)<form method="POST" action="{{ route('admin.engineers.approve', $engineer->user_id) }}" class="inline">@csrf<button class="rounded-lg bg-emerald-600 px-3 py-2 text-xs font-semibold text-white hover:bg-emerald-700" type="submit">Approve</button></form>@endunless</td>
+                                <td class="px-4 py-4 text-right"><div class="flex justify-end gap-2">@unless ($engineer->admin_approved)<form method="POST" action="{{ route('admin.engineers.approve', $engineer->user_id) }}" class="inline">@csrf<button class="rounded-lg bg-emerald-600 px-3 py-2 text-xs font-semibold text-white hover:bg-emerald-700" type="submit">Approve</button></form>@endunless<form method="POST" action="{{ route('admin.engineers.reject', $engineer->user_id) }}" class="inline" onsubmit="return confirm('Reject this engineer? Their account will be deleted.')">@csrf @method('DELETE')<button class="rounded-lg bg-red-600 px-3 py-2 text-xs font-semibold text-white hover:bg-red-700" type="submit">{{ $engineer->admin_approved ? 'Remove' : 'Reject' }}</button></form></div></td>
                             </tr>
                         @empty
                             <tr><td colspan="5" class="px-4 py-10 text-center text-slate-500">No engineer profiles are registered.</td></tr>
@@ -81,7 +95,7 @@
                     <thead class="bg-slate-50 text-xs uppercase tracking-wide text-slate-500"><tr><th class="px-4 py-3">User</th><th class="px-4 py-3">Role</th><th class="px-4 py-3">Linked profile</th><th class="px-4 py-3">Registered</th><th class="px-4 py-3 text-right">Account</th></tr></thead>
                     <tbody class="divide-y divide-slate-100">
                         @forelse ($records as $user)
-                            <tr><td class="px-4 py-4"><p class="font-semibold text-slate-900">{{ $user->name }}</p><p class="text-xs text-slate-500">{{ $user->email }}</p></td><td class="px-4 py-4 capitalize text-slate-700">{{ $user->role }}</td><td class="px-4 py-4 text-slate-700">{{ $user->engineerProfile?->professional_title ?? $user->currentFacility?->name ?? 'No linked profile' }}</td><td class="whitespace-nowrap px-4 py-4 text-slate-600">{{ $user->created_at?->format('M d, Y') }}</td><td class="px-4 py-4 text-right"><a href="{{ route('admin.users.show', $user) }}" class="rounded-lg border border-slate-300 px-3 py-2 text-xs font-semibold text-blue-700 hover:bg-blue-50">View account</a></td></tr>
+                            <tr><td class="px-4 py-4"><p class="font-semibold text-slate-900">{{ $user->name }}</p><p class="text-xs text-slate-500">{{ $user->email }}</p></td><td class="px-4 py-4 capitalize text-slate-700">{{ $user->role }}</td><td class="px-4 py-4 text-slate-700">{{ $user->engineerProfile?->professional_title ?? $user->currentFacility?->name ?? 'No linked profile' }}</td><td class="whitespace-nowrap px-4 py-4 text-slate-600">{{ $user->created_at?->format('M d, Y') }}</td><td class="px-4 py-4 text-right"><div class="flex justify-end gap-2"><a href="{{ route('admin.users.show', $user) }}" class="rounded-lg border border-slate-300 px-3 py-2 text-xs font-semibold text-blue-700 hover:bg-blue-50">View account</a>@unless ($user->is(auth()->user()))<form method="POST" action="{{ route('admin.users.destroy', $user) }}" onsubmit="return confirm('Delete this account permanently?')">@csrf @method('DELETE')<button class="rounded-lg bg-red-600 px-3 py-2 text-xs font-semibold text-white hover:bg-red-700" type="submit">Delete</button></form>@endunless</div></td></tr>
                         @empty
                             <tr><td colspan="5" class="px-4 py-10 text-center text-slate-500">No users found.</td></tr>
                         @endforelse

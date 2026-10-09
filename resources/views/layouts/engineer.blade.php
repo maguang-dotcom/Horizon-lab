@@ -35,9 +35,10 @@
 @php
     $navItems = [
         ['Dashboard', route('engineer.dashboard'), 'engineer.dashboard', 'dashboard', '<path d="M3 11.5 12 4l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-8.5Z"/>'],
-        ['Assignments', route('engineer.dashboard').'#assignments', 'engineer.assignments', 'assignments', '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 10h.01M12 10h3M9 14h.01M12 14h3M9 18h.01M12 18h3"/>'],
-        ['Facilities', route('engineer.dashboard').'#assigned-facilities', 'engineer.facilities', 'assigned-facilities', '<rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M9 7h.01M12 7h.01M15 7h.01M9 11h.01M12 11h.01M15 11h.01M10 21v-4h4v4"/>'],
-        ['Reports', route('engineer.dashboard').'#reports', 'engineer.reports.*', 'reports', '<path d="M7 3h7l4 4v14H7V3Z"/><path d="M14 3v4h4M10 12h5M10 16h5"/>'],
+        ['Assignments', route('engineer.assignments'), 'engineer.assignments', 'assignments', '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 10h.01M12 10h3M9 14h.01M12 14h3M9 18h.01M12 18h3"/>'],
+        ['Facilities', route('engineer.facilities'), 'engineer.facilities', 'assigned-facilities', '<rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M9 7h.01M12 7h.01M15 7h.01M9 11h.01M12 11h.01M15 11h.01M10 21v-4h4v4"/>'],
+        ['Reports', route('engineer.reports.index'), 'engineer.reports.*', 'reports', '<path d="M7 3h7l4 4v14H7V3Z"/><path d="M14 3v4h4M10 12h5M10 16h5"/>'],
+        ['Settings', route('engineer.settings'), 'engineer.settings.*', 'settings', '<path d="M12 1a11 11 0 1 0 11 11A11 11 0 0 0 12 1Zm0 20a9 9 0 1 1 9-9 9 9 0 0 1-9 9Zm1-14h-2v6h6v-2h-4Z"/>'],
     ];
 @endphp
 

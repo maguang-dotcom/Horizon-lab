@@ -11,6 +11,7 @@ use App\Models\ServiceRequest;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
@@ -148,6 +149,55 @@ class AdminManagementController extends Controller
         $user->update($validated);
 
         return redirect()->route('admin.settings.index')->with('success', 'Administrator profile updated.');
+    }
+
+    public function storeAdmin(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        User::forceCreate([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => $validated['password'],
+            'role' => 'admin',
+        ]);
+
+        return redirect()->route('admin.users.index')->with('success', $validated['name'].' was added as an administrator.');
+    }
+
+    public function rejectEngineer(Request $request, User $user): RedirectResponse
+    {
+        abort_unless($user->role === 'engineer', 404);
+
+        return $this->deleteAccount($request, $user, $user->name.' was rejected and the account removed.');
+    }
+
+    public function destroyUser(Request $request, User $user): RedirectResponse
+    {
+        return $this->deleteAccount($request, $user, $user->name.' account was deleted.');
+    }
+
+    private function deleteAccount(Request $request, User $user, string $message): RedirectResponse
+    {
+        if ($user->is($request->user())) {
+            return back()->with('error', 'You cannot delete your own account.');
+        }
+
+        if ($user->role === 'admin' && User::where('role', 'admin')->count() <= 1) {
+            return back()->with('error', 'The last administrator cannot be deleted.');
+        }
+
+        try {
+            $user->delete();
+        } catch (QueryException) {
+            return back()->with('error', 'This account has linked records and could not be deleted.');
+        }
+
+        return redirect()->route('admin.users.index')->with('success', $message);
     }
 
     private function approvedEngineers(): EloquentCollection
