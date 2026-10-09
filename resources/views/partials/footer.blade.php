@@ -43,7 +43,7 @@
             <ul class="space-y-2 text-sm">
                 <li><a href="{{ route('register') }}" class="hover:text-white">Request a service</a></li>
                 <li><a href="{{ route('register') }}" class="hover:text-white">Join the network</a></li>
-                <li><a href="mailto:info@backupmedical.co.uk" class="hover:text-white">Email our team</a></li>
+                <li><a href="mailto:info@horizon-lab.com" class="hover:text-white">Email our team</a></li>
             </ul>
         </div>
     </div>
@@ -54,7 +54,7 @@
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
             <p>&copy; {{ date('Y') }} Horizon-LAB Ltd &nbsp;|&nbsp; Site by <a href="https://adandco.com/" class="hover:text-white" target="_blank" rel="noopener">AD&amp;CO</a></p>
-            <a href="mailto:info@backupmedical.co.uk" class="hover:text-white">Contact the team</a>
+            <a href="mailto:info@horizon-lab.com" class="hover:text-white">Contact the team</a>
         </div>
     </div>
 </footer>

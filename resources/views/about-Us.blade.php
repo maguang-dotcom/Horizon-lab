@@ -36,7 +36,7 @@
                 Built upon excellent client relationships, we are well known and trusted by all our contacts within NHS procurement and estate teams. Our private customers include a wide range of care homes and nursing universities.
             </p>
             <p class="leading-relaxed">
-                Our engineers service the whole of Kitgum and, if required, we can cover the whole of Uganda.
+                Our engineers service the whole of Kitgum and we can cover the neighboring districts.
             </p>
         </div>
     </section>

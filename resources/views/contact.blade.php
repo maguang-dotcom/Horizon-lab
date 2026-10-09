@@ -88,7 +88,7 @@
                     <div class="border-t border-slate-200 pt-6">
                         <label class="flex items-start gap-3 text-sm text-slate-600">
                             <input type="checkbox" id="consent" name="consent" value="1" @checked(old('consent')) required class="mt-1 h-4 w-4 accent-teal-700">
-                            <span>I agree to the Backup Medical privacy policy.</span>
+                            <span>I agree to the Horizon-LAB privacy policy.</span>
                         </label>
                         @error('consent') <span class="block mt-1 text-xs text-red-700">{{ $message }}</span> @enderror
                         <p class="mt-3 text-xs leading-relaxed text-slate-500">By submitting your details, you agree to the conditions set out in the privacy policy.</p>

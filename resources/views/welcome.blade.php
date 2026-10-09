@@ -49,26 +49,12 @@
             {{-- Left column --}}
             <div>
 
-                {{-- Badge --}}
-                <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-teal-400 text-xs font-medium mb-6">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         class="w-3.5 h-3.5"
-                         viewBox="0 0 24 24"
-                         fill="none"
-                         stroke="currentColor"
-                         stroke-width="2.5">
-                        <path d="M20 6 9 17l-5-5"
-                              stroke-linecap="round"
-                              stroke-linejoin="round" />
-                    </svg>
-
-                    Trusted Biomedical Network in Uganda
-                </span>
+            
 
 
                 {{-- Main Heading --}}
                 <h1 class="text-4xl sm:text-5xl font-bold text-white leading-tight mb-6">
-                    Bridging the Gap in Healthcare Logistics.
+                   Behind every healthy machine is a life saved.
                 </h1>
 
 
@@ -208,36 +194,6 @@
                     </div>
 
                 </div>
-
-
-                {{-- ================= STATISTICS ================= --}}
-                <div class="border-t border-slate-800 pt-8 mt-8 flex flex-wrap gap-12">
-
-                    {{-- Facilities --}}
-                    <div>
-                        <div class="text-2xl font-bold text-white">
-                            {{ number_format($metrics['facilities'] ?? 0) }}
-                        </div>
-
-                        <div class="text-teal-400 text-xs mt-1">
-                            Registered Facilities
-                        </div>
-                    </div>
-
-
-                    {{-- Engineers --}}
-                    <div>
-                        <div class="text-2xl font-bold text-white">
-                            {{ number_format($metrics['engineers'] ?? 0) }}
-                        </div>
-
-                        <div class="text-teal-400 text-xs mt-1">
-                            Available Engineers
-                        </div>
-                    </div>
-
-                </div>
-
             </div>
 
 
@@ -249,16 +205,6 @@
             </div>
 
         </div>
-    </section>
-
-
-    {{-- ================= TRUST STRIP ================= --}}
-    <section class="bg-gray-50 py-8">
-
-        <p class="text-center text-xs font-semibold text-slate-400 tracking-wide">
-            Trusted by leading health institutions across East Africa
-        </p>
-
     </section>
 
 

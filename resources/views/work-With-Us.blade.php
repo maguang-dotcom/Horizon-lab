@@ -72,7 +72,7 @@
                 Built upon excellent client relationships, we are well known and trusted by all our contacts within NHS procurement and estate teams. Our private customers include a wide range of care homes and nursing universities.
             </p>
             <p class="leading-relaxed">
-                Our engineers service the whole of Kitgum District and, if required, we can cover the whole of Uganda.
+                Our engineers service the whole of Kitgum District and we can cover neighboring districts as well.
             </p>
         </div>
     </section>
@@ -123,53 +123,22 @@
         </div>
     </section>
 
-    {{-- ================= OUR OBJECTIVES ================= --}}
-    <section class="py-16">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="max-w-2xl mx-auto text-center mb-12">
-                <h2 class="text-2xl font-semibold text-slate-800 mb-4">Our Objectives</h2>
-                <p class="text-slate-500 leading-relaxed">
-                    We strive to offer a complete solution for every healthcare sector, finding innovative ways to seamlessly work together, to make sure your medical equipment meets industry standards and requirements.
-                </p>
-            </div>
-
-            @php
-                $objectives = [
-                    ['title' => 'Added Value', 'text' => 'We listen to our customers and add value to your offering by sharing our expertise.'],
-                    ['title' => 'Highest Standards', 'text' => 'Our service team maintain equipment to the highest standards and offer advice and support to ensure equipment is safe, working and compliant.'],
-                    ['title' => 'Healthcare', 'text' => 'We care passionately about healthcare and the people in the profession.'],
-                    ['title' => 'Excellent Service', 'text' => 'Our team are all committed to delivering the very best level of customer service.'],
-                    ['title' => 'Relationships', 'text' => 'We believe in forming long-term relationships with our clients, customers and users.'],
-                    ['title' => 'Flexible Solutions', 'text' => 'We offer long term service contracts for your equipment, as well as ad hoc repairs and servicing.'],
-                ];
-            @endphp
-
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                @foreach ($objectives as $item)
-                    <div class="border-l-2 border-[#1791a7] pl-5">
-                        <h3 class="font-semibold text-slate-800 mb-2">{{ $item['title'] }}</h3>
-                        <p class="text-sm text-slate-500 leading-relaxed">{{ $item['text'] }}</p>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
+    
 
     {{-- ================= B2B ================= --}}
     <section class="py-16 bg-gray-50">
         <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
-            <div>
+            <div class="bg-white rounded-lg shadow-sm p-8">
                 <span class="text-[#1791a7] font-semibold text-sm tracking-wide">B2B</span>
-                <h2 class="text-2xl font-semibold text-slate-800 mt-2 mb-4">Business to Business</h2>
-                <p class="text-slate-500 leading-relaxed mb-4">
+                <h3 class="text-xl font-semibold text-slate-800 mt-2 mb-4">Business to Business</h3>
+                <p class="text-slate-500 leading-relaxed mb-6">
                     Helping your business is at the core of Horizon-LAB. We can offer bespoke solutions tailored to your business's needs.
                 </p>
                 <p class="text-slate-500 leading-relaxed">
                     We only work with the best in the industry.
                 </p>
             </div>
-
-            <div class="bg-white rounded-lg shadow-sm p-8">
+             <div class="bg-white rounded-lg shadow-sm p-8">
                 <span class="text-[#1791a7] font-semibold text-sm tracking-wide">Long-Lasting Relationships</span>
                 <h3 class="text-xl font-semibold text-slate-800 mt-2 mb-4">Partner with Horizon-LAB</h3>
                 <p class="text-slate-500 leading-relaxed mb-6">
