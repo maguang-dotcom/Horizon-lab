@@ -7,9 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Schema;
-use App\Models\EngineerCredential;
-use App\Models\EngineerRating;
-use App\Models\EngineerToolkit;
 
 class EngineerProfile extends Model
 {
@@ -17,7 +14,8 @@ class EngineerProfile extends Model
         'user_id', 'facility_id', 'professional_title', 'specialization',
         'years_experience', 'latitude', 'longitude', 'location_updated_at',
         'bio_safety_level', 'license_number', 'certifications', 'is_available',
-        'is_approved', 'approved_at',
+        'is_approved', 'approved_at', 'phone', 'location', 'service_radius_km',
+        'bio', 'photo_path',
     ];
 
     protected $casts = [

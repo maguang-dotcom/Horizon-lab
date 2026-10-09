@@ -37,6 +37,11 @@
                     <div><dt class="text-xs font-semibold uppercase text-slate-500">Specialization</dt><dd class="mt-1 text-sm text-slate-800">{{ $user->engineerProfile->specialization ?? 'Not provided' }}</dd></div>
                     <div><dt class="text-xs font-semibold uppercase text-slate-500">License number</dt><dd class="mt-1 text-sm text-slate-800">{{ $user->engineerProfile->license_number ?? 'Not provided' }}</dd></div>
                     <div><dt class="text-xs font-semibold uppercase text-slate-500">Experience</dt><dd class="mt-1 text-sm text-slate-800">{{ $user->engineerProfile->years_experience ?? 'Not provided' }}{{ $user->engineerProfile->years_experience !== null ? ' years' : '' }}</dd></div>
+                    <div><dt class="text-xs font-semibold uppercase text-slate-500">Phone</dt><dd class="mt-1 text-sm text-slate-800">{{ $user->engineerProfile->phone ?? 'Not provided' }}</dd></div>
+                    <div><dt class="text-xs font-semibold uppercase text-slate-500">Location</dt><dd class="mt-1 text-sm text-slate-800">{{ $user->engineerProfile->location ?? 'Not provided' }}</dd></div>
+                    <div><dt class="text-xs font-semibold uppercase text-slate-500">Service radius</dt><dd class="mt-1 text-sm text-slate-800">{{ $user->engineerProfile->service_radius_km ? $user->engineerProfile->service_radius_km.' km' : 'Not provided' }}</dd></div>
+                    <div class="sm:col-span-2"><dt class="text-xs font-semibold uppercase text-slate-500">Bio</dt><dd class="mt-1 text-sm text-slate-800">{{ $user->engineerProfile->bio ?? 'Not provided' }}</dd></div>
+                    <div><dt class="text-xs font-semibold uppercase text-slate-500">Profile last updated</dt><dd class="mt-1 text-sm text-slate-800">{{ $user->engineerProfile->updated_at?->format('M d, Y g:i A') ?? 'Unknown' }}</dd></div>
                     <div><dt class="text-xs font-semibold uppercase text-slate-500">Availability</dt><dd class="mt-1 text-sm text-slate-800">{{ $user->engineerProfile->is_available ? 'Available' : 'Unavailable' }}</dd></div>
                 </dl>
             </section>
