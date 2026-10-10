@@ -26,7 +26,6 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'address' => ['required', 'string', 'max:255'],
-            'request_type' => ['required', 'in:services,equipment'],
             'password' => ['required', 'string', 'confirmed', Password::defaults()],
         ]);
 
@@ -41,7 +40,6 @@ class RegisterController extends Controller
             'user_id' => $user->id,
             'name' => $validated['name'],
             'address' => $validated['address'],
-            'request_type' => $validated['request_type'],
         ]);
 
         $this->sendWelcomeEmail($user);

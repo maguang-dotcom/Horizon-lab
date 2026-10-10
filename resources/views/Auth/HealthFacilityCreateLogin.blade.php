@@ -42,17 +42,6 @@
                     class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
             </div>
             <div class="mb-4">
-                <span class="block text-sm font-medium text-gray-700 mb-1">What do you want to request?</span>
-                <div class="grid grid-cols-2 gap-3">
-                    @foreach (['services' => 'Request Services', 'equipment' => 'Request Equipment'] as $value => $label)
-                        <label class="cursor-pointer">
-                            <input type="radio" name="request_type" value="{{ $value }}" class="peer sr-only" required @checked(old('request_type') === $value)>
-                            <span class="block text-center border border-gray-300 rounded-md px-3 py-2 text-sm font-medium text-gray-700 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:border-indigo-600 peer-focus-visible:ring-2 peer-focus-visible:ring-indigo-500">{{ $label }}</span>
-                        </label>
-                    @endforeach
-                </div>
-            </div>
-            <div class="mb-4">
                 <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
                 <input type="password" name="password" id="password" required minlength="8"
                     class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">

@@ -161,7 +161,6 @@ class RoleBasedAuthenticationTest extends TestCase
             'name' => 'Facility Manager',
             'email' => 'new-facility@example.com',
             'address' => 'Kampala',
-            'request_type' => 'services',
             'password' => 'Secret123!x',
             'password_confirmation' => 'Secret123!x',
         ]);

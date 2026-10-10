@@ -50,7 +50,6 @@
                 <h2 class="text-lg font-bold text-slate-900">Facility profile</h2>
                 <dl class="mt-4 grid gap-4 sm:grid-cols-2">
                     <div><dt class="text-xs font-semibold uppercase text-slate-500">Facility</dt><dd class="mt-1 text-sm text-slate-800">{{ $facility->name }}</dd></div>
-                    <div><dt class="text-xs font-semibold uppercase text-slate-500">Requests</dt><dd class="mt-1 text-sm text-slate-800">{{ $facility->request_type ? ucfirst($facility->request_type) : 'Not specified' }}</dd></div>
                     <div><dt class="text-xs font-semibold uppercase text-slate-500">Facility type</dt><dd class="mt-1 text-sm text-slate-800">{{ $facility->facility_type ?? 'Not specified' }}</dd></div>
                     <div><dt class="text-xs font-semibold uppercase text-slate-500">Address</dt><dd class="mt-1 text-sm text-slate-800">{{ $facility->address ?? 'Not provided' }}</dd></div>
                     <div><dt class="text-xs font-semibold uppercase text-slate-500">District</dt><dd class="mt-1 text-sm text-slate-800">{{ $facility->district ?? 'Not provided' }}</dd></div>
