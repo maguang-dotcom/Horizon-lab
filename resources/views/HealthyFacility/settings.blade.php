@@ -308,19 +308,19 @@
                     <div>
                         <label for="location"
                                class="mb-1.5 block text-sm font-semibold text-slate-700">
-                            Location
+                            District
                         </label>
 
                         <input
                             id="location"
-                            name="location"
+                            name="district"
                             type="text"
-                            value="{{ old('location', $facility->address ?? '') }}"
+                            value="{{ old('district', $facility->address ?? '') }}"
                             placeholder="e.g. Kitgum, Northern Uganda"
                             class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100"
                         >
 
-                        @error('location')
+                        @error('district')
                             <p class="mt-1 text-sm text-red-700">
                                 {{ $message }}
                             </p>

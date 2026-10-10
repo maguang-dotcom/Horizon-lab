@@ -161,8 +161,9 @@ class RoleBasedAuthenticationTest extends TestCase
             'name' => 'Facility Manager',
             'email' => 'new-facility@example.com',
             'address' => 'Kampala',
-            'password' => 'secret123',
-            'password_confirmation' => 'secret123',
+            'request_type' => 'services',
+            'password' => 'Secret123!x',
+            'password_confirmation' => 'Secret123!x',
         ]);
 
         $response->assertRedirectToRoute('facility.dashboard');
@@ -413,8 +414,8 @@ class RoleBasedAuthenticationTest extends TestCase
             'professional_title' => 'Biomedical Engineer',
             'specialization' => 'Imaging equipment',
             'license_number' => 'ENG-12345',
-            'password' => 'secret123',
-            'password_confirmation' => 'secret123',
+            'password' => 'Secret123!x',
+            'password_confirmation' => 'Secret123!x',
         ]);
 
         $response->assertRedirectToRoute('engineer.dashboard');

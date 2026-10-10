@@ -11,7 +11,8 @@ class Facility extends Model
     protected $fillable = [
         'user_id', 'name', 'facility_type', 'address', 'district',
         'latitude', 'longitude', 'contact_phone', 'status', 'working_license_path', 'logo_path',
-        'email', 'duration_of_operation', 'contact_person', 'website', 'bio',
+        'email',
+        'request_type', 'duration_of_operation', 'contact_person', 'website', 'bio',
     ];
 
     protected $casts = [

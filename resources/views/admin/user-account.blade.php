@@ -50,6 +50,7 @@
                 <h2 class="text-lg font-bold text-slate-900">Facility profile</h2>
                 <dl class="mt-4 grid gap-4 sm:grid-cols-2">
                     <div><dt class="text-xs font-semibold uppercase text-slate-500">Facility</dt><dd class="mt-1 text-sm text-slate-800">{{ $facility->name }}</dd></div>
+                    <div><dt class="text-xs font-semibold uppercase text-slate-500">Requests</dt><dd class="mt-1 text-sm text-slate-800">{{ $facility->request_type ? ucfirst($facility->request_type) : 'Not specified' }}</dd></div>
                     <div><dt class="text-xs font-semibold uppercase text-slate-500">Facility type</dt><dd class="mt-1 text-sm text-slate-800">{{ $facility->facility_type ?? 'Not specified' }}</dd></div>
                     <div><dt class="text-xs font-semibold uppercase text-slate-500">Address</dt><dd class="mt-1 text-sm text-slate-800">{{ $facility->address ?? 'Not provided' }}</dd></div>
                     <div><dt class="text-xs font-semibold uppercase text-slate-500">District</dt><dd class="mt-1 text-sm text-slate-800">{{ $facility->district ?? 'Not provided' }}</dd></div>
@@ -63,7 +64,6 @@
                     @if ($facility->logo_path)
                         <div class="sm:col-span-2"><dt class="text-xs font-semibold uppercase text-slate-500">Logo</dt><dd class="mt-2"><img src="{{ asset('storage/'.$facility->logo_path) }}" alt="{{ $facility->name }} logo" class="h-16 w-16 rounded-lg border border-slate-200 object-cover"></dd></div>
                     @endif
-                    <div><dt class="text-xs font-semibold uppercase text-slate-500">Status</dt><dd class="mt-1 capitalize text-sm text-slate-800">{{ $facility->status ?? 'Active' }}</dd></div>
                 </dl>
             </section>
         @else

@@ -58,6 +58,7 @@
                 <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
                 <input type="password" name="password" id="password" required
                     class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <p class="mt-1 text-xs text-gray-500">At least 8 characters with uppercase, lowercase, a number and a symbol.</p>
             </div>
 
             <div class="mb-4">

@@ -17,8 +17,8 @@ it('lets an admin add another admin', function () {
     $this->actingAs($admin)->post(route('admin.admins.store'), [
         'name' => 'Second Admin',
         'email' => 'b@test.com',
-        'password' => 'password123',
-        'password_confirmation' => 'password123',
+        'password' => 'Str0ng!Pass1',
+        'password_confirmation' => 'Str0ng!Pass1',
     ])->assertRedirect(route('admin.users.index'));
 
     expect(User::where('email', 'b@test.com')->value('role'))->toBe('admin');
