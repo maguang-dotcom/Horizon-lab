@@ -69,7 +69,7 @@
 
             <button type="submit"
                 class="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition">
-                Submit Registration
+                Create Account
             </button>
         </form>
 
