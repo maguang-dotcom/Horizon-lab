@@ -30,6 +30,14 @@ class FacilitySettingsController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'facility_name' => ['required', 'string', 'max:255'],
+            'facility_type' => ['nullable', 'string', 'max:100'],
+            'phone' => ['nullable', 'string', 'max:30'],
+            'email' => ['nullable', 'email', 'max:255'],
+            'location' => ['nullable', 'string', 'max:255'],
+            'duration_of_operation' => ['nullable', 'string', 'max:255'],
+            'contact_person' => ['nullable', 'string', 'max:255'],
+            'website' => ['nullable', 'string', 'max:255'],
+            'bio' => ['nullable', 'string', 'max:2000'],
             'logo' => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp', 'max:2048'],
         ]);
 
@@ -47,6 +55,14 @@ class FacilitySettingsController extends Controller
             $user->save();
 
             $facility->name = $validated['facility_name'];
+            $facility->facility_type = $validated['facility_type'] ?? null;
+            $facility->contact_phone = $validated['phone'] ?? null;
+            $facility->email = $validated['email'] ?? null;
+            $facility->address = $validated['location'] ?? null;
+            $facility->duration_of_operation = $validated['duration_of_operation'] ?? null;
+            $facility->contact_person = $validated['contact_person'] ?? null;
+            $facility->website = $validated['website'] ?? null;
+            $facility->bio = $validated['bio'] ?? null;
 
             if ($newLogoPath !== null) {
                 $facility->logo_path = $newLogoPath;
