@@ -53,6 +53,12 @@
         @endif
 
 
+        @if (request()->boolean('upload_too_large'))
+            <div class="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+                The file you selected is too large. Please choose an image smaller than 2 MB (PNG, JPG or WEBP).
+            </div>
+        @endif
+
         {{-- Validation Errors --}}
         @if ($errors->any())
             <div class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
