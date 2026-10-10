@@ -11,10 +11,10 @@
                 P.O. Box 1234, Kitgum
             </p>
             <p class="mt-3 text-sm">
-                 <a href="mailto:info@horizon-lab.com" class="hover:text-white">info@horizon-lab.com</a>
+                 <a href="mailto:horizonlabs2025@gmail.com" class="hover:text-white">horizonlabs2025@gmail.com</a>
             </p>
             <p class="text-sm">
-                <a href="tel:+256700000000" class="hover:text-white">+256 700 000 000</a>
+                <a href="tel:+256779902900" class="hover:text-white">+256 779902900</a>
             </p>
         </div>
 
@@ -43,7 +43,7 @@
             <ul class="space-y-2 text-sm">
                 <li><a href="{{ route('register') }}" class="hover:text-white">Request a service</a></li>
                 <li><a href="{{ route('register') }}" class="hover:text-white">Join the network</a></li>
-                <li><a href="mailto:info@horizon-lab.com" class="hover:text-white">Email our team</a></li>
+                <li><a href="mailto:horizonlabs2025@gmail.com" class="hover:text-white">Email our team</a></li>
             </ul>
         </div>
     </div>
