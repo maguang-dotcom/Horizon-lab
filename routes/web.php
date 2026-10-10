@@ -167,8 +167,8 @@ Route::middleware(['auth', 'role:engineer'])
             ->name('reports.create');
         Route::post('requests/{serviceRequest}/report', [EngineerServiceReportController::class, 'store'])
             ->name('reports.store');
-    });
 
-Route::get('/engineer/settings', [EngineerSettingsController::class, 'edit'])->name('engineer.settings');
-Route::put('/engineer/settings/profile', [EngineerSettingsController::class, 'updateProfile'])->name('engineer.settings.profile.update');
-Route::put('/engineer/settings/password', [EngineerSettingsController::class, 'updatePassword'])->name('engineer.settings.password.update');
+        Route::get('settings', [EngineerSettingsController::class, 'edit'])->name('settings');
+        Route::put('settings/profile', [EngineerSettingsController::class, 'updateProfile'])->name('settings.profile.update');
+        Route::put('settings/password', [EngineerSettingsController::class, 'updatePassword'])->name('settings.password.update');
+    });

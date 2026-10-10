@@ -53,7 +53,16 @@
                     <div><dt class="text-xs font-semibold uppercase text-slate-500">Facility type</dt><dd class="mt-1 text-sm text-slate-800">{{ $facility->facility_type ?? 'Not specified' }}</dd></div>
                     <div><dt class="text-xs font-semibold uppercase text-slate-500">Address</dt><dd class="mt-1 text-sm text-slate-800">{{ $facility->address ?? 'Not provided' }}</dd></div>
                     <div><dt class="text-xs font-semibold uppercase text-slate-500">District</dt><dd class="mt-1 text-sm text-slate-800">{{ $facility->district ?? 'Not provided' }}</dd></div>
-                    <div><dt class="text-xs font-semibold uppercase text-slate-500">Contact phone</dt><dd class="mt-1 text-sm text-slate-800">{{ $facility->contact_phone ?? 'Not provided' }}</dd></div>
+                    <div><dt class="text-xs font-semibold uppercase text-slate-500">Contact phone</dt><dd class="mt-1 text-sm text-slate-800">{{ $facility->contact_phone ?: 'Not provided' }}</dd></div>
+                    <div><dt class="text-xs font-semibold uppercase text-slate-500">Facility email</dt><dd class="mt-1 text-sm text-slate-800">{{ $facility->email ?: 'Not provided' }}</dd></div>
+                    <div><dt class="text-xs font-semibold uppercase text-slate-500">Contact person</dt><dd class="mt-1 text-sm text-slate-800">{{ $facility->contact_person ?: 'Not provided' }}</dd></div>
+                    <div><dt class="text-xs font-semibold uppercase text-slate-500">Website</dt><dd class="mt-1 text-sm text-slate-800">{{ $facility->website ?: 'Not provided' }}</dd></div>
+                    <div><dt class="text-xs font-semibold uppercase text-slate-500">Operating hours</dt><dd class="mt-1 text-sm text-slate-800">{{ $facility->duration_of_operation ?: 'Not provided' }}</dd></div>
+                    <div><dt class="text-xs font-semibold uppercase text-slate-500">Profile last updated</dt><dd class="mt-1 text-sm text-slate-800">{{ $facility->updated_at?->format('M d, Y g:i A') ?? 'Unknown' }}</dd></div>
+                    <div class="sm:col-span-2"><dt class="text-xs font-semibold uppercase text-slate-500">About</dt><dd class="mt-1 whitespace-pre-line text-sm text-slate-800">{{ $facility->bio ?: 'Not provided' }}</dd></div>
+                    @if ($facility->logo_path)
+                        <div class="sm:col-span-2"><dt class="text-xs font-semibold uppercase text-slate-500">Logo</dt><dd class="mt-2"><img src="{{ asset('storage/'.$facility->logo_path) }}" alt="{{ $facility->name }} logo" class="h-16 w-16 rounded-lg border border-slate-200 object-cover"></dd></div>
+                    @endif
                     <div><dt class="text-xs font-semibold uppercase text-slate-500">Status</dt><dd class="mt-1 capitalize text-sm text-slate-800">{{ $facility->status ?? 'Active' }}</dd></div>
                 </dl>
             </section>
