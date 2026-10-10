@@ -54,7 +54,7 @@
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
             <p>&copy; {{ date('Y') }} Horizon-LAB Ltd &nbsp;|&nbsp; Site by <a href="https://adandco.com/" class="hover:text-white" target="_blank" rel="noopener">AD&amp;CO</a></p>
-            <a href="mailto:info@horizon-lab.com" class="hover:text-white">Contact the team</a>
+            <a href="mailto:horizonlabs2025@gmail.com" class="hover:text-white">Contact the team</a>
         </div>
     </div>
 </footer>
